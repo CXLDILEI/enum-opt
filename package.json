@@ -1,0 +1,29 @@
+{
+  "name": "enum-opt",
+  "version": "1.0.0",
+  "description": "typescript enum to options",
+  "main": "./src/utils.js",
+  "scripts": {
+    "dev:example": "pnpm tsc -w -p tsconfig.dev.json",
+    "dev": "pnpm tsc -w",
+    "build": "pnpm tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["typescript","enum","options","enum to options","enum utils"],
+  "author": "TYF",
+  "license": "MIT",
+  "type": "module",
+  "bin": "./lib/index.js",
+  "typings": "./types/index.ts",
+  "files": ["README.md", "lib", "template", "package.json", "LICENSE"],
+  "devDependencies": {
+    "@babel/parser": "^7.20.13",
+    "@babel/traverse": "^7.20.13",
+    "@babel/types": "^7.20.7",
+    "@types/node": "^18.11.18",
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "ejs": "^3.1.8"
+  }
+}

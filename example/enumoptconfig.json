@@ -1,0 +1,4 @@
+{
+	"entry": "./enum.ts",
+	"outDir": "./output"
+}
