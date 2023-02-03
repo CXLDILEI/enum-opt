@@ -27,6 +27,9 @@
     "package.json",
     "LICENSE"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "@babel/parser": "^7.20.13",
     "@babel/traverse": "^7.20.13",
