@@ -18,7 +18,7 @@ npm install enum-opt --save
 npx enum-opt yourfile.ts
 ```
 
-或在package.json中script添加
+或在package.json中script添加脚本
 
 ```json
 "scripts": {
