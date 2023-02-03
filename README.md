@@ -46,6 +46,7 @@ npm run enum-opt
 | outDir       | 输出的文件目录                                               | string         | ./      |
 | fileSuffix   | 输出文件后缀，输出文件名为入口文件名+文件后缀（entry类型为object时无效） | string         | -opt    |
 | optionSuffix | 输出选项变量后缀                                             | string         | Options |
+| exclude      | 排除的枚举，排除的选项将不会生成                             | string         | -       |
 
 ## 示例
 
@@ -128,4 +129,4 @@ labelToValue('新增', actionTypeOptions) // 1
 
 ## 注意
 
-- 枚举注释应该在枚举值的上方
+- 枚举注释应该在枚举值的上方,不然可能会导致生成失败
