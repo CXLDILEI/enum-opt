@@ -2,7 +2,7 @@
   "name": "enum-opt",
   "version": "1.0.0",
   "description": "typescript enum to options",
-  "main": "./src/utils.js",
+  "main": "./lib/utils.js",
   "scripts": {
     "dev": "pnpm tsc -w",
     "build": "pnpm tsc",
@@ -42,6 +42,12 @@
     "typescript": "^4.9.4"
   },
   "dependencies": {
+    "ejs": "^3.1.8"
+  },
+  "peerDependencies": {
+    "typescript": "^4.9.4",
+    "@babel/parser": "^7.20.13",
+    "@babel/traverse": "^7.20.13",
     "ejs": "^3.1.8"
   }
 }
