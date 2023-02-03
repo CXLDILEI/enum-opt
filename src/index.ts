@@ -167,6 +167,7 @@ function mergeConfig(config): Config {
   config.outDir = config.outDir || defaultOutDir
   config.fileSuffix = config.fileSuffix || defaultFileSuffix
   config.optionSuffix = config.optionSuffix || defaultOptionSuffix
+  config.exclude = config.exclude || []
   return config
 }
 function isRegExp(v) {
