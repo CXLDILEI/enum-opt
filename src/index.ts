@@ -137,7 +137,7 @@ function readConfigFile(): Config {
  * @param path
  */
 function transformToken(path) {
-  return path.replace(/\\/, '/').replace(/\.ts/, '')
+  return path.replace(/\\/g, '/').replace(/\.ts/, '')
 }
 function analysisConfig(config) {
   if (config.entry && typeof config.entry === "string") {
