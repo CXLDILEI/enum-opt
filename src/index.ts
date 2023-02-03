@@ -32,15 +32,17 @@ function createAsset(entry: string, optionSuffix) {
   const optionsData: OptionsAstItem[] = []
   traverse.default(ast, {
     TSEnumDeclaration({ node }) {
-      optionsData.push(
-        {
-          name: `${toLowerCaseFirstLetter(node.id.name)}${optionSuffix}`,
-          options: getOptions(node.members, node.id.name),
-          startLine: node.loc.start.line,
-          sourceEnum: node.id.name,
-          comments: findComments(ast.comments, node.loc.start.line)
-        }
-      )
+      if (!inExclude(node.id.name)) {
+        optionsData.push(
+          {
+            name: `${toLowerCaseFirstLetter(node.id.name)}${optionSuffix}`,
+            options: getOptions(node.members, node.id.name),
+            startLine: node.loc.start.line,
+            sourceEnum: node.id.name,
+            comments: findComments(ast.comments, node.loc.start.line)
+          }
+        )
+      }
     },
   })
   return optionsData
@@ -128,6 +130,7 @@ function readConfigFile(): Config {
       outDir: defaultOutDir,
       optionSuffix: defaultOptionSuffix,
       fileSuffix: defaultFileSuffix,
+      exclude: [],
     }
   }
 }
@@ -155,7 +158,7 @@ function analysisConfig(config) {
     throw Error('The entry is missing')
   }
 }
-function mergeConfig(config) {
+function mergeConfig(config): Config {
   const commands = process.argv.slice(2)
   const commandEntry = commands[0]
   if (commandEntry) {
@@ -165,6 +168,21 @@ function mergeConfig(config) {
   config.fileSuffix = config.fileSuffix || defaultFileSuffix
   config.optionSuffix = config.optionSuffix || defaultOptionSuffix
   return config
+}
+function isRegExp(v) {
+  return Object.prototype.toString.call(v) === '[object RegExp]';
+}
+
+/**
+ * 判断枚举是否在 exclude中
+ * @param str
+ */
+function inExclude(str: string) {
+  return mergeConfig(config).exclude.some((item) => {
+    if (isRegExp(item)) {
+      return item.test(str)
+    } else return str === item
+  })
 }
 function main() {
   config = readConfigFile()

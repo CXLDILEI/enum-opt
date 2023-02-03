@@ -44,4 +44,8 @@ export interface Config {
    * 输出选项后缀
    */
   optionSuffix: string
+  /**
+   * 排除选项
+   */
+  exclude: string[] | RegExp[]
 }
