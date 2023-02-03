@@ -2,10 +2,10 @@ import { Options } from './types/opt'
 
 /**
  * 根据选项的value查找label值
- * @param value
- * @param options
+ * @param value 枚举值
+ * @param options 选项
  */
-export function valueToLabel (value, options: Options[]) {
+export function valueToLabel(value, options: Options[]) {
   const data = options.find((item) => item.value === value)
   if (data) {
     return data.label
@@ -20,7 +20,7 @@ export function valueToLabel (value, options: Options[]) {
  * @param label
  * @param options
  */
-export function labelToValue (label, options: Options[]) {
+export function labelToValue(label: string, options: Options[]) {
   const data = options.find((item) => item.label === label)
   if (data) {
     return data.value

@@ -13,7 +13,6 @@
   "license": "MIT",
   "type": "module",
   "bin": "./lib/index.js",
-  "typings": "./lib/types/index.d.ts",
   "files": ["README.md", "lib",
     "template", "package.json", "LICENSE"],
   "devDependencies": {
