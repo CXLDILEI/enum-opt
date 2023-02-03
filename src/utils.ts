@@ -1,4 +1,4 @@
-import { Options } from '../types/opt'
+import { Options } from './types/opt'
 
 /**
  * 根据选项的value查找label值

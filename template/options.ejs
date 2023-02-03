@@ -1,3 +1,4 @@
+// @ts-ignore
 import { <%= data.map((item, index) => index > 0 ? ' ' + item.sourceEnum : item.sourceEnum).join(',') %> } from '<%= enumPath %>'
 <% data.forEach((item) => { -%>
 /**

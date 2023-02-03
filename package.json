@@ -4,18 +4,18 @@
   "description": "typescript enum to options",
   "main": "./src/utils.js",
   "scripts": {
-    "dev:example": "pnpm tsc -w -p tsconfig.dev.json",
     "dev": "pnpm tsc -w",
     "build": "pnpm tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["typescript","enum","options","enum to options","enum utils"],
+  "keywords": ["typescript","enum","options","transform"],
   "author": "TYF",
   "license": "MIT",
   "type": "module",
   "bin": "./lib/index.js",
-  "typings": "./types/index.ts",
-  "files": ["README.md", "lib", "template", "package.json", "LICENSE"],
+  "typings": "./lib/types/index.d.ts",
+  "files": ["README.md", "lib",
+    "template", "package.json", "LICENSE"],
   "devDependencies": {
     "@babel/parser": "^7.20.13",
     "@babel/traverse": "^7.20.13",

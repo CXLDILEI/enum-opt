@@ -4,8 +4,9 @@
     "target": "esnext",
     "lib": [
       "dom",
-      "esnext",
+      "esnext"
     ],
+    "rootDir": "./src",
     "removeComments": false,
     "declaration": true,
     "sourceMap": true,

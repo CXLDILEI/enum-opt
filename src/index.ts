@@ -3,12 +3,23 @@ import parser from '@babel/parser'
 import traverse from '@babel/traverse'
 import fs from 'fs'
 import ejs from 'ejs'
-import path from "path";
-import * as process from "process";
-import { OptionsAstItem, Config } from '../types/opt'
+import path from "path"
+import * as process from "process"
+import { OptionsAstItem, Config } from './types/opt'
+import { fileURLToPath } from "node:url"
 
 let config: Config | undefined = undefined
-function createAsset(entry: string) {
+const defaultOutDir = '.'
+const defaultOptionSuffix = 'Options'
+const defaultFileSuffix = '-opt'
+const __filename = fileURLToPath(import.meta.url)
+
+/**
+ * 读取枚举文件创建ast
+ * @param entry
+ * @param optionSuffix
+ */
+function createAsset(entry: string, optionSuffix) {
   const enumPath = path.resolve(process.cwd(), entry)
   const source = fs.readFileSync(enumPath, {
     encoding: "utf-8"
@@ -23,7 +34,7 @@ function createAsset(entry: string) {
     TSEnumDeclaration({ node }) {
       optionsData.push(
         {
-          name: `${toLowerCaseFirstLetter(node.id.name)}Options`,
+          name: `${toLowerCaseFirstLetter(node.id.name)}${optionSuffix}`,
           options: getOptions(node.members, node.id.name),
           startLine: node.loc.start.line,
           sourceEnum: node.id.name,
@@ -34,9 +45,20 @@ function createAsset(entry: string) {
   })
   return optionsData
 }
+
+/**
+ * 处理label多余字符
+ * @param label
+ */
 function simplifyLabel(label: string) {
   return label.replace(/(\*|\r|\n|\s)/g, '')
 }
+
+/**
+ * 获取选项结构
+ * @param members
+ * @param name
+ */
 function getOptions(members, name) {
   return members.map((item) => {
     let label = ''
@@ -51,19 +73,37 @@ function getOptions(members, name) {
   })
 }
 
+/**
+ * 读取模板生成代码
+ * @param data
+ * @param fileName
+ * @param enumPath
+ */
 function generate(data, fileName, enumPath) {
-  const template = fs.readFileSync('../template/options.ejs', {
+  const template = fs.readFileSync(path.resolve(__filename, '..', '..', 'template/options.ejs'), {
     encoding: "utf-8"
   })
-  const outputPath = path.resolve(process.cwd(), config?.outDir || '.', fileName)
+  const outputPath = path.resolve(process.cwd(), mergeConfig(config).outDir, fileName)
   const code = ejs.render(template, { data, enumPath })
   fs.writeFileSync(outputPath, code, {
     encoding: "utf-8"
   })
+  console.log('done:', outputPath)
 }
+
+/**
+ * 转换为首字母小写
+ * @param str
+ */
 function toLowerCaseFirstLetter(str) {
   return str.substring(0, 1).toLocaleLowerCase() + str.substring(1)
 }
+
+/**
+ * 查找注释
+ * @param comments 注释数组
+ * @param startLine
+ */
 function findComments(comments, startLine) {
   const node = comments.find((item) => {
     return item.loc.end.line === (startLine - 1)
@@ -83,30 +123,51 @@ function readConfigFile(): Config {
     })
     return JSON.parse(configJson)
   } else {
-    throw Error('config file not found please create enumoptconfig.json or .enumoptrc.js in the root directory')
+    return {
+      entry: '',
+      outDir: defaultOutDir,
+      optionSuffix: defaultOptionSuffix,
+      fileSuffix: defaultFileSuffix,
+    }
   }
 }
+
+/**
+ * 转换文件路径格式
+ * @param path
+ */
 function transformToken(path) {
   return path.replace(/\\/, '/').replace(/\.ts/, '')
 }
 function analysisConfig(config) {
-  if (typeof config.entry === "string") {
-    const data = createAsset(config.entry)
+  if (config.entry && typeof config.entry === "string") {
+    const data = createAsset(config.entry, config.optionSuffix)
     const fileName = path.parse(config.entry).name
-    const enumPath = transformToken(path.relative(config.outDir || process.cwd(), config.entry))
-    generate(data, `${fileName}-opt.ts`, enumPath)
+    const enumPath = transformToken(path.relative(config.outDir, config.entry))
+    generate(data, `${fileName}${config.fileSuffix}.ts`, enumPath)
   } else if (config.entry && typeof config.entry === "object") {
     for (const key in config.entry) {
-      const enumPath = transformToken(path.relative(config.outDir || process.cwd(), config.entry[key]))
-      const data = createAsset(config.entry[key])
+      const enumPath = transformToken(path.relative(config.outDir, config.entry[key]))
+      const data = createAsset(config.entry[key], config.optionSuffix)
       generate(data, `${key}.ts`, enumPath)
     }
   } else {
-    throw Error('The entry attribute is missing from the configuration file')
+    throw Error('The entry is missing')
   }
+}
+function mergeConfig(config) {
+  const commands = process.argv.slice(2)
+  const commandEntry = commands[0]
+  if (commandEntry) {
+    config.entry = commandEntry
+  }
+  config.outDir = config.outDir || defaultOutDir
+  config.fileSuffix = config.fileSuffix || defaultFileSuffix
+  config.optionSuffix = config.optionSuffix || defaultOptionSuffix
+  return config
 }
 function main() {
   config = readConfigFile()
-  analysisConfig(config)
+  analysisConfig(mergeConfig(config))
 }
 main()
