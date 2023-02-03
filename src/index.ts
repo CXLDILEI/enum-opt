@@ -29,7 +29,7 @@ function createAsset(entry: string, optionSuffix) {
     ranges: false,
     plugins: ['typescript']
   })
-  let optionsData: OptionsAstItem[] = []
+  const optionsData: OptionsAstItem[] = []
   traverse.default(ast, {
     TSEnumDeclaration({ node }) {
       optionsData.push(
@@ -65,7 +65,7 @@ function getOptions(members, name) {
     if (Array.isArray(item.leadingComments)) {
       label = simplifyLabel(item.leadingComments[0].value)
     }
-    let value = `${name}.${item.id.name}`
+    const value = `${name}.${item.id.name}`
     return {
       label,
       value
