@@ -9,6 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": ["typescript","enum","options","transform"],
+  "repository": "git@github.com:CXLDILEI/enum-opt.git",
   "author": "TYF",
   "license": "MIT",
   "type": "module",
