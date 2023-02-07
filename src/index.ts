@@ -140,10 +140,11 @@ function readConfigFile(): Config {
  * @param p
  */
 function transformPathToken(p) {
+  const tempPath = p.split(path.sep).join('/').replace('.ts', '')
   if (path.dirname(p) === '.') {
-    return './' + p.split(path.sep).join('/')
+    return './' + tempPath
   }
-  return p.split(path.sep).join('/')
+  return tempPath
 }
 function analysisConfig(config) {
   if (config.entry && typeof config.entry === "string") {
