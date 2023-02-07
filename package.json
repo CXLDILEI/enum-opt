@@ -1,6 +1,6 @@
 {
   "name": "enum-opt",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "typescript enum to options",
   "main": "./lib/utils.js",
   "scripts": {
