@@ -137,20 +137,23 @@ function readConfigFile(): Config {
 
 /**
  * 转换文件路径格式
- * @param path
+ * @param p
  */
-function transformToken(path) {
-  return path.replace(/\\/g, '/').replace(/\.ts/, '')
+function transformPathToken(p) {
+  if (path.dirname(p) === '.') {
+    return './' + p.split(path.sep).join('/')
+  }
+  return p.split(path.sep).join('/')
 }
 function analysisConfig(config) {
   if (config.entry && typeof config.entry === "string") {
     const data = createAsset(config.entry, config.optionSuffix)
     const fileName = path.parse(config.entry).name
-    const enumPath = transformToken(path.relative(config.outDir, config.entry))
+    const enumPath = transformPathToken(path.relative(config.outDir, config.entry))
     generate(data, `${fileName}${config.fileSuffix}.ts`, enumPath)
   } else if (config.entry && typeof config.entry === "object") {
     for (const key in config.entry) {
-      const enumPath = transformToken(path.relative(config.outDir, config.entry[key]))
+      const enumPath = transformPathToken(path.relative(config.outDir, config.entry[key]))
       const data = createAsset(config.entry[key], config.optionSuffix)
       generate(data, `${key}.ts`, enumPath)
     }
