@@ -32,11 +32,19 @@ npm run enum-opt
 
 ## 配置
 
-在根目录下新增enumoptconfig.json
+在根目录下新增enumoptconfig.json或者.enumoptrc.js
 
 ```json
+// enumoptconfig.json
 {
   "entry": "enum.ts"
+}
+```
+
+```js
+// .enumoptrc.js
+module.exports = {
+	entry: "enum.ts"
 }
 ```
 

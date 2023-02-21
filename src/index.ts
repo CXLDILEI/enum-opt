@@ -7,12 +7,14 @@ import path from "path"
 import * as process from "process"
 import { OptionsAstItem, Config } from './types/opt'
 import { fileURLToPath } from "node:url"
+import { createRequire } from 'node:module';
 
 let config: Config | undefined = undefined
 const defaultOutDir = '.'
 const defaultOptionSuffix = 'Options'
 const defaultFileSuffix = '-opt'
 const __filename = fileURLToPath(import.meta.url)
+const require = createRequire(import.meta.url);
 
 /**
  * 读取枚举文件创建ast
@@ -117,13 +119,16 @@ function findComments(comments, startLine) {
 function readConfigFile(): Config {
   const jsonConfigPath = path.join(process.cwd(), 'enumoptconfig.json')
   const hasJsonConfig = fs.existsSync(jsonConfigPath)
-  // const jsConfigPath = path.join(process.cwd(), '.enumoptrc.js')
-  // const hasJSConfigPath = fs.existsSync(jsConfigPath)
+  const jsConfigPath = path.join(process.cwd(), '.enumoptrc.js')
+  const hasJSConfigPath = fs.existsSync(jsConfigPath)
   if (hasJsonConfig) {
     const configJson = fs.readFileSync(jsonConfigPath, {
       encoding: 'utf-8'
     })
     return JSON.parse(configJson)
+  } else if (hasJSConfigPath) {
+    const jsConfig = require(jsConfigPath)
+    return jsConfig
   } else {
     return {
       entry: '',
