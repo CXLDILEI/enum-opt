@@ -22,7 +22,7 @@ npx enum-opt yourfile.ts
 
 ```json
 "scripts": {
-	"enum-opt": "enum-opt"
+  "enum-opt": "enum-opt"
 }
 ```
 
