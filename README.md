@@ -84,6 +84,8 @@ export enum ActionType {
 npx enum-opt enum.ts
 ```
 
+生成 enum-opt.ts
+
 ```typescript
 // @ts-ignore
 import { ActionType } from 'enum'
