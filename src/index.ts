@@ -8,6 +8,7 @@ import * as process from "process"
 import { OptionsAstItem, Config } from './types/opt'
 import { fileURLToPath } from "node:url"
 import { createRequire } from 'node:module';
+import { toLowerCaseFirstLetter, simplifyLabel } from './hepler.js'
 
 let config: Config | undefined = undefined
 const defaultOutDir = '.'
@@ -51,14 +52,6 @@ function createAsset(entry: string, optionSuffix) {
 }
 
 /**
- * 处理label多余字符
- * @param label
- */
-function simplifyLabel(label: string) {
-  return label.replace(/(\*|\r|\n|\s)/g, '')
-}
-
-/**
  * 获取选项结构
  * @param members
  * @param name
@@ -93,14 +86,6 @@ function generate(data, fileName, enumPath) {
     encoding: "utf-8"
   })
   console.log('done:', outputPath)
-}
-
-/**
- * 转换为首字母小写
- * @param str
- */
-function toLowerCaseFirstLetter(str) {
-  return str.substring(0, 1).toLocaleLowerCase() + str.substring(1)
 }
 
 /**
@@ -145,6 +130,7 @@ function readConfigFile(): Config {
  * @param p
  */
 function transformPathToken(p) {
+  console.log(p)
   const tempPath = p.split(path.sep).join('/').replace('.ts', '')
   if (path.dirname(p) === '.') {
     return './' + tempPath

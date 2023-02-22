@@ -1,14 +1,14 @@
 {
   "compilerOptions": {
+    "target": "ES2015",
     "module": "esnext",
-    "target": "esnext",
     "lib": [
       "dom",
       "esnext"
     ],
     "rootDir": "./src",
     "removeComments": false,
-    "declaration": true,
+    "declaration": false,
     "sourceMap": true,
     "strict": true,
     "noImplicitAny": false,
@@ -16,7 +16,7 @@
     "outDir": "./lib",
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
   },
   "include": [
     "src"
