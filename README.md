@@ -1,10 +1,10 @@
-
+English | [简体中文](./README-zh_CN.md)
 
 # enum-opt
 
-typescript enum转换为选项
+typescript enum Convert to an option data structure
 
-## 安装
+## Install
 
 ### npm
 
@@ -12,13 +12,13 @@ typescript enum转换为选项
 npm install enum-opt --save
 ```
 
-## 使用
+## Using
 
 ```bash
 npx enum-opt yourfile.ts
 ```
 
-或在package.json中script添加脚本
+Or add script in package.json script
 
 ```json
 "scripts": {
@@ -30,9 +30,9 @@ npx enum-opt yourfile.ts
 npm run enum-opt
 ```
 
-## 配置
+## Config
 
-在根目录下新增enumoptconfig.json或者.enumoptrc.js
+Add enumoptconfig.json or.enumoptrc.js to the root directory
 
 enumoptconfig.json
 
@@ -46,36 +46,36 @@ enumoptconfig.json
 
 ```js
 module.exports = {
-	entry: "enum.ts"
+  entry: "enum.ts"
 }
 ```
 
-| 参数         | 说明                                                         | 类型           | 默认值  |
+| Property         | Description                                                         | Type       | Default |
 | ------------ | ------------------------------------------------------------ | -------------- | ------- |
-| entry        | 需要解析的枚举文件路径，多个文件可以使用对象配置             | string\|object | -       |
-| outDir       | 输出的文件目录                                               | string         | ./      |
-| fileSuffix   | 输出文件后缀，输出文件名为入口文件名+文件后缀（entry类型为object时无效） | string         | -opt    |
-| optionSuffix | 输出选项变量后缀                                             | string         | Options |
-| exclude      | 排除的枚举，排除的选项将不会生成                             | string         | -       |
+| entry        | Enumeration file path to be parsed, multiple files can be configured using objects | string\|object | -       |
+| outDir       | Output file directory                          | string         | ./      |
+| fileSuffix   | The output file name is the entry file name + the file name suffix (invalid if the entry type is object). | string         | -opt    |
+| optionSuffix | Output option variable suffix                | string         | Options |
+| exclude      | Excluded enumeration, excluded options will not be generated | string         | -       |
 
-## 示例
+## Example
 
-### 单个文件
+### A single file
 
 enum.ts
 
 ```typescript
 /**
- * 操作类型
+ * action type
  */
 export enum ActionType {
-  // 新增
+  // add
   Add,
-  // 编辑
+  // edit
   Edit,
-  // 详情
+  // detail
   Detail,
-  // 完善
+  // perfect
   Perfect,
 }
 ```
@@ -84,35 +84,35 @@ export enum ActionType {
 npx enum-opt enum.ts
 ```
 
-生成 enum-opt.ts
+generate enum-opt.ts
 
 ```typescript
 // @ts-ignore
 import { ActionType } from 'enum'
 /**
-* 操作类型
+* action type
 */
 export const actionTypeOptions = [
   {
-    label: '新增',
+    label: 'add',
     value: ActionType.Add,
   },
   {
-    label: '编辑',
+    label: 'edit',
     value: ActionType.Edit,
   },
   {
-    label: '详情',
+    label: 'detail',
     value: ActionType.Detail,
   },
   {
-    label: '完善',
+    label: 'perfect',
     value: ActionType.Perfect,
   },
 ]
 ```
 
-### 多个文件
+### Multiple file
 
 enumoptconfig.json
 
@@ -125,20 +125,20 @@ enumoptconfig.json
 }
 ```
 
-将会输出enum-options.ts和actions-options.ts
+enum-options.ts and actions-options.ts will be printed
 
-## 取值方法
+## Formatting
 
 ```typescript
 import { valueToLabel, labelToValue } from 'enum-opt'
 import { actionTypeOptions } from './util/enum-opt'
 import { ActionType } from './enum'
 
-valueToLabel(ActionType.Add, actionTypeOptions) // 新增
+valueToLabel(ActionType.Add, actionTypeOptions) // add
 
-labelToValue('新增', actionTypeOptions) // 1
+labelToValue('add', actionTypeOptions) // 1
 ```
 
-## 注意
+## notice
 
-- 枚举注释应该在枚举值的上方,不然可能会导致生成失败
+- Enumeration comments should be above the enumeration value, otherwise the build may fail
