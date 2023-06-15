@@ -30,6 +30,12 @@ Or add script in package.json script
 npm run enum-opt
 ```
 
+## Commands
+
+| Command | Description           | Default |
+| ------- | --------------------- | ------- |
+| -o      | Output file directory | .       |
+
 ## Config
 
 Add enumoptconfig.json or.enumoptrc.js to the root directory
@@ -60,7 +66,7 @@ module.exports = {
 
 ## Example
 
-### A single file
+### single file
 
 enum.ts
 
@@ -112,7 +118,7 @@ export const actionTypeOptions = [
 ]
 ```
 
-### Multiple file
+### multiple file
 
 enumoptconfig.json
 

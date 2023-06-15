@@ -30,6 +30,12 @@ npx enum-opt yourfile.ts
 npm run enum-opt
 ```
 
+## 指令
+
+| 指令 | 说明           | 默认值 |
+| ---- | -------------- | ------ |
+| -o   | 输出的文件目录 | .      |
+
 ## 配置
 
 在根目录下新增enumoptconfig.json或者.enumoptrc.js

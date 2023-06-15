@@ -10,7 +10,13 @@ import { fileURLToPath } from "node:url"
 import { createRequire } from 'node:module';
 import { toLowerCaseFirstLetter, simplifyLabel } from './hepler.js'
 
-let config: Config | undefined = undefined
+let config: Config = {
+  entry: '',
+  outDir: '',
+  fileSuffix: '',
+  optionSuffix: '',
+  exclude: []
+}
 const defaultOutDir = '.'
 const defaultOptionSuffix = 'Options'
 const defaultFileSuffix = '-opt'
@@ -80,7 +86,7 @@ function generate(data, fileName, enumPath) {
   const template = fs.readFileSync(path.resolve(__filename, '..', '..', 'template/options.ejs'), {
     encoding: "utf-8"
   })
-  const outputPath = path.resolve(process.cwd(), mergeConfig(config).outDir, fileName)
+  const outputPath = path.resolve(process.cwd(), config.outDir, fileName)
   const code = ejs.render(template, { data, enumPath })
   fs.writeFileSync(outputPath, code, {
     encoding: "utf-8"
@@ -130,14 +136,13 @@ function readConfigFile(): Config {
  * @param p
  */
 function transformPathToken(p) {
-  console.log(p)
   const tempPath = p.split(path.sep).join('/').replace('.ts', '')
   if (path.dirname(p) === '.') {
     return './' + tempPath
   }
   return tempPath
 }
-function analysisConfig(config) {
+function analysisConfig() {
   if (config.entry && typeof config.entry === "string") {
     const data = createAsset(config.entry, config.optionSuffix)
     const fileName = path.parse(config.entry).name
@@ -153,12 +158,7 @@ function analysisConfig(config) {
     throw Error('The entry is missing')
   }
 }
-function mergeConfig(config): Config {
-  const commands = process.argv.slice(2)
-  const commandEntry = commands[0]
-  if (commandEntry) {
-    config.entry = commandEntry
-  }
+function mergeConfig(): Config {
   config.outDir = config.outDir || defaultOutDir
   config.fileSuffix = config.fileSuffix || defaultFileSuffix
   config.optionSuffix = config.optionSuffix || defaultOptionSuffix
@@ -174,14 +174,27 @@ function isRegExp(v) {
  * @param str
  */
 function inExclude(str: string) {
-  return mergeConfig(config).exclude.some((item) => {
+  return config.exclude.some((item) => {
     if (isRegExp(item)) {
       return item.test(str)
     } else return str === item
   })
 }
+function analyzeCommands() {
+  const commands = process.argv.slice(2)
+  const commandEntry = commands[0]
+  if (commandEntry) {
+    config.entry = commandEntry
+  }
+  if (commands.includes('-o')) {
+    const outDirIndex = commands.indexOf('-o') + 1
+    config.outDir = commands[outDirIndex]
+  }
+}
 function main() {
   config = readConfigFile()
-  analysisConfig(mergeConfig(config))
+  mergeConfig()
+  analyzeCommands()
+  analysisConfig()
 }
 main()
