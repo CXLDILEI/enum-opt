@@ -1,6 +1,6 @@
 {
   "name": "enum-opt",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "typescript enum to options",
   "main": "./lib/utils.js",
   "scripts": {
@@ -66,7 +66,10 @@
       "release": true
     },
     "hooks": {
-      "before:init": ["pnpm run lint", "pnpm test:run"],
+      "before:init": [
+        "pnpm run lint",
+        "pnpm test:run"
+      ],
       "after:release": "echo Successfully released ${name} v${version} to ${repo.repository}."
     }
   }
