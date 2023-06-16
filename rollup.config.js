@@ -4,18 +4,26 @@ import ts from 'rollup-plugin-typescript2'
 import commonjs from '@rollup/plugin-commonjs'
 import json from '@rollup/plugin-json'
 
+const plugins = [
+	nodeResolve({
+		extensions:['.js', '.ts']
+	}),
+	ts({
+		tsconfig: path.resolve(__dirname, 'tsconfig.json')
+	}),
+	commonjs(),
+	json(),
+]
+
 export default [
 	{
-		input:'src/utils.js',
+		input:'src/utils.ts',
 		output:{
 			file: path.resolve(__dirname,'lib/utils.js'),
 			format: 'esm',
 			sourcemap: true,
 		},
-		plugins: [
-			commonjs(),
-			json(),
-		]
+		plugins,
 	},
 	{
 		input:'src/index.ts',
@@ -24,15 +32,6 @@ export default [
 			format: 'esm',
 			sourcemap: true,
 		},
-		plugins:[
-			nodeResolve({
-				extensions:['.js', '.ts']
-			}),
-			ts({
-				tsconfig: path.resolve(__dirname, 'tsconfig.json')
-			}),
-			commonjs(),
-			json(),
-		]
+		plugins,
 	},
 ]

@@ -4,6 +4,7 @@ import traverse from '@babel/traverse'
 import fs from "fs";
 import path from "path";
 import ejs from 'ejs'
+import { OptionsAstItem, Config } from './types/opt'
 
 /**
  * 根据选项的value查找label值
@@ -41,7 +42,7 @@ function parserEnum(source, optionSuffix, config = {}) {
     ranges: false,
     plugins: ['typescript']
   })
-  const optionsData = []
+  const optionsData: OptionsAstItem[] = []
   traverse(ast, {
     TSEnumDeclaration({ node }) {
       if (!inExclude(node.id.name, config)) {
