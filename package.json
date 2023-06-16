@@ -9,7 +9,8 @@
     "test": "vitest",
     "lint": "eslint --fix",
     "prepublish": "pnpm build",
-    "release": "release-it"
+    "release": "release-it",
+    "test:run": "vitest run"
   },
   "keywords": [
     "typescript",
@@ -65,7 +66,7 @@
       "release": true
     },
     "hooks": {
-      "before:init": ["npm run lint", "npm test"],
+      "before:init": ["pnpm run lint", "pnpm test:run"],
       "after:release": "echo Successfully released ${name} v${version} to ${repo.repository}."
     }
   }
