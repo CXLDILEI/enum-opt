@@ -1,0 +1,13 @@
+<% data.forEach((item) => { -%>
+    /**
+    * <%= item.comments %>
+    */
+    export const <%= item.name %> = [
+    <% item.options.forEach((option) => { -%>
+        {
+        label: '<%= option.label %>',
+        value: <%= option.value %>,
+        },
+    <% }) -%>
+    ]
+<% }) %>

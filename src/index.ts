@@ -1,14 +1,11 @@
-import typescript from 'typescript'
-import parser from '@babel/parser'
-import traverse from '@babel/traverse'
 import fs from 'fs'
 import ejs from 'ejs'
 import path from "path"
 import * as process from "process"
-import { OptionsAstItem, Config } from './types/opt'
+import { Config } from './types/opt'
 import { fileURLToPath } from "node:url"
 import { createRequire } from 'node:module';
-import { toLowerCaseFirstLetter, simplifyLabel } from './hepler.js'
+import { parserEnum } from './utils.js'
 
 let config: Config = {
   entry: '',
@@ -33,47 +30,7 @@ function createAsset(entry: string, optionSuffix) {
   const source = fs.readFileSync(enumPath, {
     encoding: "utf-8"
   })
-  const ast = parser.parse(source, {
-    sourceType: 'module',
-    ranges: false,
-    plugins: ['typescript']
-  })
-  const optionsData: OptionsAstItem[] = []
-  traverse.default(ast, {
-    TSEnumDeclaration({ node }) {
-      if (!inExclude(node.id.name)) {
-        optionsData.push(
-          {
-            name: `${toLowerCaseFirstLetter(node.id.name)}${optionSuffix}`,
-            options: getOptions(node.members, node.id.name),
-            startLine: node.loc.start.line,
-            sourceEnum: node.id.name,
-            comments: findComments(ast.comments, node.loc.start.line)
-          }
-        )
-      }
-    },
-  })
-  return optionsData
-}
-
-/**
- * 获取选项结构
- * @param members
- * @param name
- */
-function getOptions(members, name) {
-  return members.map((item) => {
-    let label = ''
-    if (Array.isArray(item.leadingComments)) {
-      label = simplifyLabel(item.leadingComments[0].value)
-    }
-    const value = `${name}.${item.id.name}`
-    return {
-      label,
-      value
-    }
-  })
+  return parserEnum(source, optionSuffix)
 }
 
 /**
@@ -94,19 +51,6 @@ function generate(data, fileName, enumPath) {
   console.log('done:', outputPath)
 }
 
-/**
- * 查找注释
- * @param comments 注释数组
- * @param startLine
- */
-function findComments(comments, startLine) {
-  const node = comments.find((item) => {
-    return item.loc.end.line === (startLine - 1)
-  })
-  if (node) {
-    return simplifyLabel(node.value)
-  } else return ''
-}
 function readConfigFile(): Config {
   const jsonConfigPath = path.join(process.cwd(), 'enumoptconfig.json')
   const hasJsonConfig = fs.existsSync(jsonConfigPath)
@@ -164,21 +108,6 @@ function mergeConfig(): Config {
   config.optionSuffix = config.optionSuffix || defaultOptionSuffix
   config.exclude = config.exclude || []
   return config
-}
-function isRegExp(v) {
-  return Object.prototype.toString.call(v) === '[object RegExp]';
-}
-
-/**
- * 判断枚举是否在 exclude中
- * @param str
- */
-function inExclude(str: string) {
-  return config.exclude.some((item) => {
-    if (isRegExp(item)) {
-      return item.test(str)
-    } else return str === item
-  })
 }
 function analyzeCommands() {
   const commands = process.argv.slice(2)

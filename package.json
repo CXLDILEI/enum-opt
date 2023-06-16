@@ -4,8 +4,8 @@
   "description": "typescript enum to options",
   "main": "./lib/utils.js",
   "scripts": {
-    "dev": "pnpm tsc -w",
-    "build": "pnpm tsc",
+    "dev": "rollup -cw --bundleConfigAsCjs",
+    "build": "rollup -c --bundleConfigAsCjs",
     "test": "vitest",
     "lint": "eslint --fix",
     "prepublish": "pnpm build",
@@ -27,18 +27,25 @@
     "lib",
     "template",
     "package.json",
-    "LICENSE"
+    "LICENSE",
+    "src/types"
   ],
+  "typings": "src/types/utils.d.ts",
   "publishConfig": {
     "access": "public"
   },
   "devDependencies": {
     "@babel/types": "^7.20.7",
+    "@rollup/plugin-commonjs": "^25.0.1",
+    "@rollup/plugin-json": "^6.0.0",
+    "@rollup/plugin-node-resolve": "^15.1.0",
     "@types/node": "^18.11.18",
     "@typescript-eslint/eslint-plugin": "^5.50.0",
     "@typescript-eslint/parser": "^5.50.0",
     "eslint": "^8.33.0",
     "release-it": "^15.6.0",
+    "rollup": "^3.25.1",
+    "rollup-plugin-typescript2": "^0.34.1",
     "vitest": "^0.28.5"
   },
   "dependencies": {
@@ -56,6 +63,10 @@
   "release-it": {
     "github": {
       "release": true
+    },
+    "hooks": {
+      "before:init": ["npm run lint", "npm test"],
+      "after:release": "echo Successfully released ${name} v${version} to ${repo.repository}."
     }
   }
 }
