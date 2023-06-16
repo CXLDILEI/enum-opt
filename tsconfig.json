@@ -6,14 +6,13 @@
       "dom",
       "esnext"
     ],
-    "rootDir": "./src",
+    "rootDir": ".",
     "removeComments": false,
     "declaration": false,
     "sourceMap": true,
     "strict": true,
     "noImplicitAny": false,
     "baseUrl": ".",
-    "outDir": "./lib",
     "esModuleInterop": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
@@ -22,5 +21,7 @@
   "include": [
     "src"
   ],
-  "exclude": ["./src/types/*"]
+  "exclude": [
+    "./types/*"
+  ]
 }

@@ -4,7 +4,7 @@ import traverse from '@babel/traverse'
 import fs from "fs";
 import path from "path";
 import ejs from 'ejs'
-import { OptionsAstItem, Config } from './types/opt'
+import { OptionsAstItem, Config } from '../types/opt'
 
 /**
  * 根据选项的value查找label值

@@ -29,9 +29,9 @@
     "template",
     "package.json",
     "LICENSE",
-    "src/types"
+    "types"
   ],
-  "typings": "src/types/utils.d.ts",
+  "typings": "types/utils.d.ts",
   "publishConfig": {
     "access": "public"
   },

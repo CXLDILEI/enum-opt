@@ -2,7 +2,7 @@ import fs from 'fs'
 import ejs from 'ejs'
 import path from "path"
 import * as process from "process"
-import { Config } from './types/opt'
+import { Config } from '../types/opt'
 import { fileURLToPath } from "node:url"
 import { createRequire } from 'node:module';
 import { parserEnum } from './utils.js'
