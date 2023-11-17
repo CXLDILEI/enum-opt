@@ -20,7 +20,7 @@ export default [
 		input:'src/utils.ts',
 		output:{
 			file: path.resolve(__dirname,'lib/utils.js'),
-			format: 'esm',
+			format: 'cjs',
 			sourcemap: true,
 		},
 		plugins,
@@ -29,7 +29,7 @@ export default [
 		input:'src/index.ts',
 		output:{
 			file: path.resolve(__dirname,'lib/index.js'),
-			format: 'esm',
+			format: 'cjs',
 			sourcemap: true,
 		},
 		plugins,
