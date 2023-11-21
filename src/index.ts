@@ -5,7 +5,7 @@ import * as process from "process"
 import { Config } from '../types/opt'
 import { fileURLToPath } from "node:url"
 import { createRequire } from 'node:module';
-import { parserEnum } from './utils.js'
+import { parserEnum } from './core.js'
 
 let config: Config = {
   entry: '',

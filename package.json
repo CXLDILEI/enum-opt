@@ -21,7 +21,7 @@
   "repository": "git@github.com:CXLDILEI/enum-opt.git",
   "author": "TYF",
   "license": "MIT",
-  "type": "module",
+  "type": "commonjs",
   "bin": "./lib/index.js",
   "files": [
     "README.md",
@@ -72,5 +72,9 @@
       ],
       "after:release": "echo Successfully released ${name} v${version} to ${repo.repository}."
     }
+  },
+  "exports": {
+    ".": "./lib/utils.js",
+    "./core": "./lib/core.js"
   }
 }

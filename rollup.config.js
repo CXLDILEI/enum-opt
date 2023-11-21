@@ -20,7 +20,7 @@ export default [
 		input:'src/utils.ts',
 		output:{
 			file: path.resolve(__dirname,'lib/utils.js'),
-			format: 'cjs',
+			format: 'es',
 			sourcemap: true,
 		},
 		plugins,
@@ -29,6 +29,15 @@ export default [
 		input:'src/index.ts',
 		output:{
 			file: path.resolve(__dirname,'lib/index.js'),
+			format: 'cjs',
+			sourcemap: true,
+		},
+		plugins,
+	},
+	{
+		input:'src/core.ts',
+		output:{
+			file: path.resolve(__dirname,'lib/core.js'),
 			format: 'cjs',
 			sourcemap: true,
 		},

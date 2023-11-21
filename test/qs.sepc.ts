@@ -1,5 +1,6 @@
 import { expect, test } from 'vitest'
-import { labelToValue, valueToLabel, genCode } from '../src/utils'
+import { labelToValue, valueToLabel } from '../src/utils'
+import { genCode } from '../src/core'
 
 enum ActionsType {
 	// 新增
