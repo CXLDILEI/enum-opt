@@ -36,6 +36,7 @@
     "access": "public"
   },
   "devDependencies": {
+    "@babel/core": "^7.23.3",
     "@babel/types": "^7.20.7",
     "@rollup/plugin-commonjs": "^25.0.1",
     "@rollup/plugin-json": "^6.0.0",
@@ -46,7 +47,9 @@
     "eslint": "^8.33.0",
     "release-it": "^15.6.0",
     "rollup": "^3.25.1",
+    "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-typescript2": "^0.34.1",
+    "rollup-plugin-uglify": "^6.0.4",
     "vitest": "^0.28.5"
   },
   "dependencies": {
