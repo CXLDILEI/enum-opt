@@ -5,6 +5,7 @@ import commonjs from '@rollup/plugin-commonjs'
 import json from '@rollup/plugin-json'
 import babel from 'rollup-plugin-babel';
 import { uglify } from 'rollup-plugin-uglify';
+import { terser } from 'rollup-plugin-terser';
 
 const plugins = [
 	nodeResolve({
@@ -19,7 +20,7 @@ const plugins = [
 		babelHelpers: 'bundled',
 		exclude: "node_modules/**",
 	}),
-	// 压缩代码
+	terser(),
 	uglify(),
 ]
 
@@ -29,7 +30,7 @@ export default [
 		output:{
 			file: path.resolve(__dirname,'lib/utils.js'),
 			format: 'es',
-			sourcemap: true,
+			sourcemap: false,
 		},
 		plugins,
 	},
@@ -38,7 +39,7 @@ export default [
 		output:{
 			file: path.resolve(__dirname,'lib/index.js'),
 			format: 'cjs',
-			sourcemap: true,
+			sourcemap: false,
 		},
 		plugins,
 	},
@@ -47,7 +48,7 @@ export default [
 		output:{
 			file: path.resolve(__dirname,'lib/core.js'),
 			format: 'cjs',
-			sourcemap: true,
+			sourcemap: false,
 		},
 		plugins,
 	},
