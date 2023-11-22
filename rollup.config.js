@@ -16,7 +16,8 @@ const plugins = [
 	commonjs(),
 	json(),
 	babel({
-		exclude: "node_modules/**"
+		babelHelpers: 'bundled',
+		exclude: "node_modules/**",
 	}),
 	// 压缩代码
 	uglify(),
