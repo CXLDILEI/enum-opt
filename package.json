@@ -10,7 +10,8 @@
     "lint": "eslint --fix",
     "prepublish": "pnpm build",
     "release": "release-it",
-    "test:run": "vitest run"
+    "test:run": "vitest run",
+    "tsc": "tsc ./src/core.ts --declaration --emitDeclarationOnly --outDir dist"
   },
   "keywords": [
     "typescript",
@@ -30,7 +31,6 @@
     "LICENSE",
     "types"
   ],
-  "typings": "types/utils.d.ts",
   "publishConfig": {
     "access": "public"
   },
@@ -80,7 +80,13 @@
     }
   },
   "exports": {
-    ".": "./lib/utils.js",
-    "./core": "./lib/core.js"
+    ".": {
+      "import": "./lib/utils.js",
+      "types": "./types/utils.d.ts"
+    },
+    "./core": {
+      "import": "./lib/core.js",
+      "types": "./types/core.d.ts"
+    }
   }
 }
