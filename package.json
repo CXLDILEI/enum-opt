@@ -81,12 +81,12 @@
   },
   "exports": {
     ".": {
-      "import": "./lib/utils.js",
-      "types": "./types/utils.d.ts"
+      "types": "./types/utils.d.ts",
+      "import": "./lib/utils.js"
     },
     "./core": {
-      "import": "./lib/core.js",
-      "types": "./types/core.d.ts"
+      "types": "./types/core.d.ts",
+      "default": "./lib/core.js"
     }
   }
 }
