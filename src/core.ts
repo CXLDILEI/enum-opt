@@ -12,12 +12,13 @@ import traverse from '@babel/traverse'
  * @param optionSuffix
  * @returns {*}
  */
-function genCode(source, optionSuffix = 'Options') {
+function genCode(source, optionSuffix = 'Options', enumPath = undefined) {
   const data = parserEnum(source, optionSuffix)
-  const template = fs.readFileSync(path.resolve(__filename, '..', '..', 'template/content.ejs'), {
+  const templateName = enumPath ? 'options' : 'content'
+  const template = fs.readFileSync(path.resolve(__filename, '..', '..', `template/${templateName}.ejs`), {
     encoding: "utf-8"
   })
-  return ejs.render(template, { data })
+  return ejs.render(template, { data, enumPath })
 }
 /**
  * 判断枚举是否在 exclude中
