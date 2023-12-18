@@ -1,7 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { <%= data.map((item, index) => index > 0 ? ' ' + item.sourceEnum : item.sourceEnum).join(',') %> } from '<%= enumPath %>'
-/* eslint-disable import/no-unused-modules */
 <% data.forEach((item) => { -%>
 /**
 * <%= item.comments %>
@@ -15,4 +14,3 @@ export const <%= item.name %> = [
 <% }) -%>
 ]
 <% }) %>
-/* eslint-enable import/no-unused-modules */
