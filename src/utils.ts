@@ -11,7 +11,7 @@ function valueToLabel(value, options) {
   if (data) {
     return data.label
   } else {
-    console.log('enum-opt: No matching in valueToLabel')
+    console.warn('enum-opt: No matching value in function valueToLabel')
     return null
   }
 }
@@ -26,7 +26,7 @@ function labelToValue(label, options) {
   if (data) {
     return data.value
   } else {
-    console.log('enum-opt: No matching in labelToValue')
+    console.warn('enum-opt: No matching value in function labelToValue')
     return null
   }
 }
