@@ -1,6 +1,6 @@
 export interface Options {
   label: string,
-  value: number
+  value: any
 }
 export interface OptionsAstItem {
   /**
